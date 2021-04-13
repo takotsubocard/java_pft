@@ -10,7 +10,7 @@ public class ExecutionPoint {
     Point p2 = new Point();
     p2.x1 = 3;
     p2.x2 = 4;
-    System.out.println("Расстояние между точкой p1 c параметрами (" + p1.x1 + ", " + p1.x2 + ") и точкой p1 c параметрами (" + p2.x1 + ", " + p2.x2 + ") равно " + distance(p1, p2));
+    System.out.println("Расстояние между точкой p1 c параметрами (" + p1.x1 + ", " + p1.x2 + ") и точкой p2 c параметрами (" + p2.x1 + ", " + p2.x2 + ") равно " + distance(p1, p2));
   }
 
   public static double distance(Point p1, Point p2) {
