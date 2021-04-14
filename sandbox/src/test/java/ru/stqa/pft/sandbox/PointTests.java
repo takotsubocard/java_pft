@@ -6,12 +6,13 @@ import ru.stqa.pft.sandbox.Square;
 
 public class PointTests {
   @Test
-  public void testDistance2() {
-    TwoPoints p = new TwoPoints(1, 1, 2, 4);
-    TwoPoints p1 = new TwoPoints(1, 1, 2, 5);
-    TwoPoints p2 = new TwoPoints(1, 100, 100, 100);
-    Assert.assertEquals(p.distance2(), 2.0);
-    Assert.assertEquals(p1.distance2(), 3.0);
-    Assert.assertEquals(p2.distance2(), 99.0);
+  public void testDistance() {
+    Point p1 = new Point(1, 1);
+    Point p2 = new Point(1,  5);
+    Assert.assertEquals(p1.distance(p2), 4.0);
+
+    Point p3 = new Point(1000, 1);
+    Point p4 = new Point(1,  1);
+    Assert.assertEquals(p3.distance(p4), 999.0);
   }
 }
