@@ -61,9 +61,6 @@ public class ApplicationManager {
     return sessionHelper;
   }
 
-  public void setSessionHelper(SessionHelper sessionHelper) {
-    this.sessionHelper = sessionHelper;
-  }
 
    public ContactHelper getContactHelper() {
     return contactHelper;
