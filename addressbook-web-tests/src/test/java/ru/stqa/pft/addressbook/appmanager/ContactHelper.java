@@ -13,7 +13,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void submitContactCreation() {
-    click(By.xpath("(//input[@name='submit'])[2]"));
+    click(By.xpath("(//input[@name='submit'])"));
   }
 
   public void fillContactForm(ContactData contactData, boolean creation) {
@@ -31,11 +31,11 @@ public class ContactHelper extends HelperBase {
   }
 
   public void submitContactModification() {
-    click(By.xpath("(//input[@name='update'])[2]"));
+    click(By.xpath("(//input[@name='update'])"));
   }
 
   public void initContactModification() {
-    click(By.xpath("(//img[@alt='Edit'])[2]"));
+    click(By.xpath("(//img[@alt='Edit'])"));
   }
 
   public void deleteSelectedContact() {
@@ -62,8 +62,6 @@ public class ContactHelper extends HelperBase {
       fillContactForm(new ContactData("test1", "test2", "test3", "test@test.com", "111", "test_group"), true);
       submitContactCreation();
       returnToHomePage();
-
-
     }
 
 
