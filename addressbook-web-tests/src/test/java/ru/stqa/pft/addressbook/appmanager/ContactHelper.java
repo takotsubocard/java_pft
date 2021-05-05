@@ -59,7 +59,7 @@ public class ContactHelper extends HelperBase {
 
     public void createContact (ContactData contact,boolean b){
       goToAddNewPage();
-      fillContactForm(new ContactData("test1", "test2", "test3", "test@test.com", "111", "test_group"), true);
+      fillContactForm(new ContactData("test1", "test2", "test3", "test@test.com", "111", "test1"), true);
       submitContactCreation();
       returnToHomePage();
     }
@@ -67,5 +67,9 @@ public class ContactHelper extends HelperBase {
 
   public boolean isThereAContact() {
     return isElementPresent(By.name("selected[]"));
+  }
+
+  public int getContactCount() {
+   return wd.findElements(By.name("selected[]")).size();
   }
 }
