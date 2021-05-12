@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ContactDeletionTests extends TestBase{
 
-  @Test
+  @Test (enabled = false)
   public void testContactDeletion() {
   app.getNavigationHelper().returnToHomePage();
   if (! app.getContactHelper().isThereAContact()) {
@@ -23,6 +23,6 @@ public class ContactDeletionTests extends TestBase{
   before.remove(before.size()-1);
 
     Assert.assertEquals(before, after);
-  app.getSessionHelper().logout();
+ // app.getSessionHelper().logout();
   }
 }

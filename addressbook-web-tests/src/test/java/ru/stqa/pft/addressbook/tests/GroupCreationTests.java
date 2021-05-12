@@ -29,7 +29,7 @@ public class GroupCreationTests extends TestBase {
     after.sort(byId);
     Assert.assertEquals(before, after);
 
-    app.getSessionHelper().logout();
+  //  app.getSessionHelper().logout();
   }
 
 
