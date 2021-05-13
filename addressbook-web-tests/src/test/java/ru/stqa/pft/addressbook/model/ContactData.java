@@ -3,23 +3,53 @@ package ru.stqa.pft.addressbook.model;
 import java.util.Objects;
 
 public class ContactData {
-  private int id;
-  private final String name;
-  private final String surname;
+  private int id = Integer.MAX_VALUE;
+  private String name;
+  private String surname;
+  private  String address;
+  private  String email;
+  private String phone;
+  private String group;
 
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  private final String address;
-  private final String email;
 
   public int getId() {
     return id;
   }
 
-  private final String phone;
-  private final String group;
+  public ContactData withId(int id) {
+    this.id = id;
+    return this;
+  }
+
+  public ContactData withName(String name) {
+    this.name = name;
+    return this;
+  }
+
+  public ContactData withSurname(String surname) {
+    this.surname = surname;
+    return this;
+  }
+
+  public ContactData withAddress(String address) {
+    this.address = address;
+    return this;
+  }
+
+  public ContactData withEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
+  public ContactData withPhone(String phone) {
+    this.phone = phone;
+    return this;
+  }
+
+  public ContactData withGroup(String group) {
+    this.group = group;
+    return this;
+  }
 
   @Override
   public boolean equals(Object o) {
@@ -32,25 +62,6 @@ public class ContactData {
   @Override
   public int hashCode() {
     return Objects.hash(name, surname);
-  }
-
-  public ContactData(String name, String surname, String address, String email, String phone, String group) {
-    this.id = Integer.MAX_VALUE;
-    this.name = name;
-    this.surname = surname;
-    this.address = address;
-    this.email = email;
-    this.phone = phone;
-    this.group = group;
-  }
-  public ContactData(int id, String name, String surname, String address, String email, String phone, String group) {
-    this.id = id;
-    this.name = name;
-    this.surname = surname;
-    this.address = address;
-    this.email = email;
-    this.phone = phone;
-    this.group = group;
   }
 
   public String getName() {
