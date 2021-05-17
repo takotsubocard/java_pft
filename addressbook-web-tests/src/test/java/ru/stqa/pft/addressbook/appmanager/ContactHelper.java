@@ -41,8 +41,13 @@ public class ContactHelper extends HelperBase {
     click(By.xpath("(//input[@name='update'])"));
   }
 
-  public void initContactModificationById(int id) {
+public void initContactModificationById(int id) {
     wd.findElement(By.xpath("//a[contains(@href, 'edit.php?id=" + id + "')]")).click();
+
+//  WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']", id));
+//    WebElement row = checkbox.findElement(By.xpath("./../.."));
+//    List<WebElement> cells = row.findElements(By.tagName("td"));
+//    cells.get(7).findElement(By.tagName("a")).click();
   }
 
   public void deleteSelectedContact() {
@@ -97,11 +102,25 @@ public class ContactHelper extends HelperBase {
     for (WebElement element : elements) {
       String name = element.findElement(By.cssSelector("td:nth-child(3)")).getText();
       String surname = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
+      String[] phones = element.findElement(By.cssSelector("td:nth-child(6)")).getText().split("\n");
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      ContactData contact = new ContactData().withId(id).withName(name).withSurname(surname);
+      ContactData contact = new ContactData().withId(id).withName(name).withSurname(surname).
+              withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2]);
       contacts.add(contact);
     }
     return contacts;
   }
 
+  public ContactData infoFromEditForm(ContactData contact) {
+    initContactModificationById(contact.getId());
+    String name = wd.findElement(By.name("firstname")).getAttribute("value");
+    String surname = wd.findElement(By.name("lastname")).getAttribute("value");
+    String homePhone = wd.findElement(By.name("home")).getAttribute("value");
+    String mobilePhone = wd.findElement(By.name("mobile")).getAttribute("value");
+    String workPhone = wd.findElement(By.name("work")).getAttribute("value");
+    wd.navigate().back();
+    return new ContactData().withId(contact.getId()).withName(name).withSurname(surname).
+            withHomePhone(homePhone).withMobilePhone(mobilePhone).withWorkPhone(workPhone);
+
+  }
 }
