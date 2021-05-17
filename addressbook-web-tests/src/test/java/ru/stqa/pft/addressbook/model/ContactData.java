@@ -7,11 +7,21 @@ public class ContactData {
   private String name;
   private String surname;
   private String address;
-  private String email;
+    private String email;
   private String homePhone;
   private String mobilePhone;
   private String workPhone;
+  private String allPhones;
   private String group;
+
+  public ContactData withAllPhones(String allPhones) {
+    this.allPhones = allPhones;
+    return this;
+  }
+
+  public String getAllPhones() {
+    return allPhones;
+  }
 
   public int getId() {
     return id;

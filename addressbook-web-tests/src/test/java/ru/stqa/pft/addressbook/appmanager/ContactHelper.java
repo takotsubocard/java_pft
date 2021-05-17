@@ -102,10 +102,13 @@ public void initContactModificationById(int id) {
     for (WebElement element : elements) {
       String name = element.findElement(By.cssSelector("td:nth-child(3)")).getText();
       String surname = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
-      String[] phones = element.findElement(By.cssSelector("td:nth-child(6)")).getText().split("\n");
+      String allPhones = element.findElement(By.cssSelector("td:nth-child(6)")).getText();
+      // String[] phones = element.findElement(By.cssSelector("td:nth-child(6)")).getText().split("\n");
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       ContactData contact = new ContactData().withId(id).withName(name).withSurname(surname).
-              withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2]);
+                withAllPhones(allPhones);
+
+      //        withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2]);
       contacts.add(contact);
     }
     return contacts;
