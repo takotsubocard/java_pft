@@ -24,7 +24,11 @@ public class ContactHelper extends HelperBase {
     type(By.name("lastname"), contactData.getSurname());
     type(By.name("address"), contactData.getAddress());
     type(By.name("email"), contactData.getEmail());
-    type(By.name("home"), contactData.getPhone());
+    type(By.name("home"), contactData.getHomePhone());
+    type(By.name("mobile"), contactData.getMobilePhone());
+    type(By.name("work"), contactData.getWorkPhone());
+
+
 
     if (creation) {
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -61,7 +65,8 @@ public class ContactHelper extends HelperBase {
 
    public void create(ContactData contact, boolean b){
       goToAddNewPage();
-      fillContactForm(new ContactData().withName("test1").withSurname("test2").withAddress("test3").withEmail("test@test.com").withPhone("111").withGroup("test1"), true);
+      fillContactForm(new ContactData().withName("test1").withSurname("test2").withAddress("test3").withEmail("test@test.com").
+              withHomePhone("111").withMobilePhone("222").withWorkPhone("333").withGroup("test1"), true);
       submitContactCreation();
       returnToHomePage();
     }
@@ -93,7 +98,7 @@ public class ContactHelper extends HelperBase {
       String name = element.findElement(By.cssSelector("td:nth-child(3)")).getText();
       String surname = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      ContactData contact = new ContactData().withId(id).withName(name).withSurname(surname).withAddress(null).withEmail(null).withPhone(null).withGroup(null);
+      ContactData contact = new ContactData().withId(id).withName(name).withSurname(surname);
       contacts.add(contact);
     }
     return contacts;
