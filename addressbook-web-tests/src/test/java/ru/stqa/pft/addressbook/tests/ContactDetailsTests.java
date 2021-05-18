@@ -59,12 +59,13 @@ public class ContactDetailsTests extends TestBase{
             .collect(Collectors.joining("\n"));
   }
 
-    @Test (enabled = false)
+    @Test
+            //(enabled = false)
     public void testContactAddress() {
       app.goTo().homePage();
       ContactData contact = app.contact().all().iterator().next();
       ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
-      assertThat(contact.getAddress(), equalTo(contactInfoFromEditForm));
+      assertThat(contact.getAddress(), equalTo(contactInfoFromEditForm.getAddress()));
 
    }
   }
