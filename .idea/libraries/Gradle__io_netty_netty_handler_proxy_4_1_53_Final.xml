@@ -1,11 +1,11 @@
 <component name="libraryTable">
-  <library name="Gradle: io.netty:netty-handler-proxy:4.1.53.Final">
+  <library name="Gradle: com.google.auto:auto-common:0.10">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-handler-proxy/4.1.53.Final/24007d9b48de8694e62c0796e5e7bc51c1b0f369/netty-handler-proxy-4.1.53.Final.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.auto/auto-common/0.10/c8f153ebe04a17183480ab4016098055fb474364/auto-common-0.10.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-handler-proxy/4.1.53.Final/dada7e886a0701978f8a2e709a33208674eb7ad8/netty-handler-proxy-4.1.53.Final-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.auto/auto-common/0.10/913c8de9604380c6e135086132adb26c77fa6c53/auto-common-0.10-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
