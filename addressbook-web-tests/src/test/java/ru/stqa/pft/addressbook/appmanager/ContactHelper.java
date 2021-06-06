@@ -88,6 +88,25 @@ public void initContactModificationById(int id) {
     returnToHomePage();
   }
 
+
+  public void initAddingToGroup(ContactData contact) {
+    selectContactById(contact.getId());
+    click(By.name("to_group"));
+  }
+/*  public void addContactToGroup(String groupId) {
+    Select groupsDropDown =
+            new Select(wd.findElement(By.name("to_group")));
+    groupsDropDown.selectByValue(groupId);
+  }*/
+
+  public void submitAddingToGroup() {
+    click(By.name("add"));
+  }
+
+
+
+
+
   public void delete(ContactData contact) {
     selectContactById(contact.getId());
     deleteSelectedContact();
