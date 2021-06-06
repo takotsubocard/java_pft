@@ -3,6 +3,8 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
@@ -28,12 +30,17 @@ public class ContactHelper extends HelperBase {
     type(By.name("home"), contact.getHomePhone());
     type(By.name("mobile"), contact.getMobilePhone());
     type(By.name("work"), contact.getWorkPhone());
-   // attach(By.name("photo"), contact.getPhoto());
-  }
-//    if (creation) {
-//      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contact.getGroup());
-//    } else {
-//      Assert.assertFalse(isElementPresent(By.name("new_group")));
+    // attach(By.name("photo"), contact.getPhoto());
+
+    if (creation) {
+      if (contact.getGroups().size() > 0) {
+        Assert.assertTrue(contact.getGroups().size() == 1);
+      }
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contact.getGroups().iterator().next().getName());
+      } else {
+      Assert.assertFalse(isElementPresent(By.name("new_group")));
+    }}
+
 
 
   public void submitContactModification() {

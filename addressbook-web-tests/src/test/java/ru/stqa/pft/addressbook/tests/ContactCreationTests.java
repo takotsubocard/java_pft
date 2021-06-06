@@ -6,8 +6,12 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Groups;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,18 +31,20 @@ public class ContactCreationTests extends TestBase {
         line = reader.readLine();
       }
       Gson gson = new Gson();
-      List<ContactData> groups = gson.fromJson(json, new TypeToken<List<ContactData>>() {
+      List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>() {
       }.getType()); //List<ContactData>.class
-      return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+      return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
   }
 
   @Test (dataProvider = "validContacts")
   public void testContactCreation(ContactData contact) {
+    Groups groups = app.db().groups();
+    ContactData newContact = contact.inGroup(groups.iterator().next());
     app.goTo().homePage();
     Contacts before = app.db().contacts();
     app.contact().goToAddNewPage();
-    app.contact().fillContactForm(contact,true);
+    app.contact().fillContactForm(newContact,true);
     app.contact().submitContactCreation();
     app.contact().returnToHomePage();
     Contacts after = app.db().contacts();

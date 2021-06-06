@@ -1,10 +1,12 @@
 package ru.stqa.pft.addressbook.model;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -14,17 +16,40 @@ public class ContactData {
   @Id
   @Column(name = "id")
   private int id = Integer.MAX_VALUE;
- // @Expose
-
+  @Expose
   @Column(name = "firstname")
   private String name;
- // @Expose
-
+  @Expose
   @Column(name = "lastname")
   private String surname;
- // @Expose
- @Transient
- private String address;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ContactData that = (ContactData) o;
+    return id == that.id && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(address, that.address);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, surname, address);
+  }
+
+  @Override
+  public String toString() {
+    return "ContactData{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", surname='" + surname + '\'' +
+            ", address='" + address + '\'' +
+            '}';
+  }
+
+  @Expose
+  @Column(name = "address")
+  @Type(type = "text")
+  private String address;
 
   @Transient
   private String email;
@@ -101,6 +126,14 @@ public class ContactData {
     this.id = id;
     return this;
   }
+  @Transient
+  private String group;
+
+  public ContactData withGroup(String group) {
+    this.group = group;
+    return this;
+  }
+
 
   public ContactData withName(String name) {
     this.name = name;
@@ -188,13 +221,8 @@ public class ContactData {
     return new Groups(groups);
   }
 
-  @Override
-  public String toString() {
-    return "ContactData{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", surname='" + surname + '\'' +
-            '}';
+  public ContactData inGroup(GroupData group) {
+  groups.add(group);
+  return this;
   }
-
 }
