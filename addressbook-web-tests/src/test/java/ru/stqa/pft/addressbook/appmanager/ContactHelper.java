@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
@@ -32,16 +31,18 @@ public class ContactHelper extends HelperBase {
     type(By.name("work"), contact.getWorkPhone());
     // attach(By.name("photo"), contact.getPhoto());
 
-    if (creation) {
-      if (contact.getGroups().size() > 0) {
-        Assert.assertTrue(contact.getGroups().size() == 1);
-      }
-        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contact.getGroups().iterator().next().getName());
-      } else {
-      Assert.assertFalse(isElementPresent(By.name("new_group")));
-    }}
+    /*  if (creation) {
+    if (contact.getGroups().size() > 0) {
+      Assert.assertTrue(contact.getGroups().size() == 1);
+    }
+    new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contact.getGroups().iterator().next().getName());
+  } else
 
+  {
+    Assert.assertFalse(isElementPresent(By.name("new_group")));
+  }*/
 
+}
 
   public void submitContactModification() {
     click(By.xpath("(//input[@name='update'])"));
@@ -88,23 +89,15 @@ public void initContactModificationById(int id) {
     returnToHomePage();
   }
 
-
-  public void initAddingToGroup(ContactData contact) {
-    selectContactById(contact.getId());
-    click(By.name("to_group"));
-  }
-/*  public void addContactToGroup(String groupId) {
-    Select groupsDropDown =
+  public void selectGroupOnContactPage(String groupId) {
+    Select groupsFromDropDown =
             new Select(wd.findElement(By.name("to_group")));
-    groupsDropDown.selectByValue(groupId);
-  }*/
+    groupsFromDropDown.selectByValue(groupId);
+  }
 
-  public void submitAddingToGroup() {
+  public void addContactToGroup() {
     click(By.name("add"));
   }
-
-
-
 
 
   public void delete(ContactData contact) {
@@ -152,13 +145,19 @@ public void initContactModificationById(int id) {
     String email2 = wd.findElement(By.name("email2")).getAttribute("value");
     String email3 = wd.findElement(By.name("email3")).getAttribute("value");
     String address = wd.findElement(By.name("address")).getAttribute("value");
-
-
     wd.navigate().back();
     return new ContactData().withId(contact.getId()).withName(name).withSurname(surname).
             withHomePhone(homePhone).withMobilePhone(mobilePhone).withWorkPhone(workPhone).
             withEmail(email).withEmail2(email2).withEmail3(email3).withAddress(address);
-
-
   }
+  public void filterContactsByGroup(String id) {
+    Select groupsDropDown =
+            new Select(wd.findElement(By.cssSelector("#right [name='group']")));
+    groupsDropDown.selectByValue(id);
+  }
+  public void removeContactFromGroup() {
+    click(By.name("remove"));
+  }
+
+
 }
