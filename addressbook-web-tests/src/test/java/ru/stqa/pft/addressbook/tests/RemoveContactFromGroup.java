@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
@@ -8,50 +7,62 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-public class RemoveContactFromGroup  extends TestBase{
-  private int contactId;
-  private int groupId;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
+public class RemoveContactFromGroup  extends TestBase{
 
   @BeforeMethod
-  public void createContactWithGroup() {
+  public void ensureContactAndGroupArePresent() {
     if (app.db().groups().size() == 0) {
       app.goTo().groupPage();
-      app.group().create(new GroupData().withName("group 1"));
+      app.group().create(new GroupData().withName("GroupToModify"));
     }
-    Groups groups = app.db().groups();
-    for (GroupData group : groups) {
-      if (group.getId() > groupId) {
-        groupId = group.getId();
-      }
-    }
+
     if (app.db().contacts().size() == 0) {
       app.goTo().homePage();
-      app.contact().create(new ContactData().withName("contact 1"), true);
+      app.contact().create(new ContactData().withName("ContactToModify"), true);
       app.goTo().homePage();
     }
-    Contacts contactList = app.db().contacts();
-    for ( ContactData contact : contactList) {
-      if (contact.getId() > contactId) {
-        contactId = contact.getId();
-      }
-    }
-    app.contact().selectContactById(contactId);
-    app.contact().selectGroupOnContactPage((String.valueOf(groupId)));
-    app.contact().addContactToGroup();
   }
 
   @Test
-  public void testRemoveContactToGroup(){
+  public void testRemoveContactFromGroup(){
     app.goTo().homePage();
-    app.contact().filterContactsByGroup(String.valueOf(groupId));
-    app.contact().selectContactById(contactId);
-    app.contact().removeContactFromGroup();
-    ContactData modifiedContact = app.db().contactById(contactId).iterator().next();
-    int groupsQuantity = modifiedContact.getGroups().size();
-    Assert.assertTrue(groupsQuantity == 0);
+    ContactData contact = selectContact();
+    Groups before = contact.getGroups();
+    GroupData groupToRemoveFrom = selectGroup(contact);
+    app.goTo().homePage();
+    app.contact().selectGroupToRemoveFrom(groupToRemoveFrom.getId());
+    app.contact().selectContactById(contact.getId());
+    app.contact().removeContactFromGroup(contact);
+    ContactData contactsAfter = listContactById(contact);
+    Groups after = contactsAfter.getGroups();
+    assertThat(after, equalTo(before.without(groupToRemoveFrom)));
+  }
+
+  private ContactData listContactById(ContactData contact) {
+    Contacts contactsById = app.db().contacts();
+    return contactsById.iterator().next().withId(contact.getId());
+  }
+
+  private GroupData selectGroup(ContactData removeContact) {
+    ContactData contact = listContactById(removeContact);
+    Groups removedContact = contact.getGroups();
+    return removedContact.iterator().next();
+  }
+
+  private ContactData selectContact() {
+    Contacts allContacts = app.db().contacts();
+    for (ContactData contact : allContacts) {
+      if (contact.getGroups().size() > 0) {
+        return contact;
+      }
+    }
+    ContactData addedContact = app.db().contacts().iterator().next();
+    app.contact().addToGroup(addedContact, app.db().groups().iterator().next());
+    return addedContact;
   }
 }
-
 
 

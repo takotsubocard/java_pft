@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.List;
 
@@ -95,8 +96,22 @@ public void initContactModificationById(int id) {
     groupsFromDropDown.selectByValue(groupId);
   }
 
-  public void addContactToGroup() {
-    click(By.name("add"));
+  public void addToGroup(ContactData contact, GroupData group) {
+    int id = contact.getId();
+    selectContactById(id);
+    selectGroupToAdd(group.getId());
+    add();
+  }
+
+  public void add(){click(By.xpath("(//input[@name='add'])"));}
+
+
+  public void selectGroupToAdd(int groupId) {
+    new Select(wd.findElement(By.name("to_group"))).selectByValue(String.valueOf(groupId));
+  }
+
+  public void selectGroupToRemoveFrom(int groupId) {
+    new Select(wd.findElement(By.name("group"))).selectByValue(String.valueOf(groupId));
   }
 
 
@@ -155,7 +170,7 @@ public void initContactModificationById(int id) {
             new Select(wd.findElement(By.cssSelector("#right [name='group']")));
     groupsDropDown.selectByValue(id);
   }
-  public void removeContactFromGroup() {
+  public void removeContactFromGroup(ContactData contact) {
     click(By.name("remove"));
   }
 
